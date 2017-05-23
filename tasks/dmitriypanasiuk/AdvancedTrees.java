@@ -56,9 +56,18 @@ class Polygon {
 
     boolean contains(Point p) {
         int intersections = 0;
-        for (int side = 0; side < borders.size(); side++) {
-            // Test if current side intersects with ray.
-            // If yes, intersections++;
+
+        for (int side = 0; side < borders.size() - 1; side++) {
+            if (areIntersecting(p.x, p.y, mbr().x1, mbr().y1,
+                                borders.get(side).x, borders.get(side).y,
+                                borders.get(side+1).x, borders.get(side+1).y)) {
+                intersections++;
+            }
+        }
+        if (areIntersecting(p.x, p.y, mbr().x1, mbr().y1,
+                borders.get(0).x, borders.get(0).y,
+                borders.get(borders.size()-1).x, borders.get(borders.size()-1).y)) {
+            intersections++;
         }
         return (intersections & 1) == 1;
     }
@@ -106,7 +115,7 @@ class Polygon {
 }
 
 class Rectangle {
-    private double x1, x2, y1, y2;
+    double x1, x2, y1, y2;
 
     Rectangle(double x1, double x2, double y1, double y2) {
         assert x1 < x2;
