@@ -6,28 +6,40 @@ import net.minidev.json.JSONArray;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdvancedTrees {
-    public static void readPolygons(String filename) throws IOException {
+    public static Map<String, Polygon> readPolygons(String filename) throws IOException {
+        Map<String, Polygon> polygons = new HashMap<>();
         File file = new File(AdvancedTrees.class.getResource(filename).getFile());
         JSONArray features = JsonPath.read(file, "$.features");
         for (Object o : features) {
             LinkedHashMap map = (LinkedHashMap)o;
             LinkedHashMap properties = (LinkedHashMap) map.get("properties");
-            System.out.println(properties.get("NAME"));
+            String polygonName = (String)properties.get("NAME");
             LinkedHashMap geometry = (LinkedHashMap) map.get("geometry");
             JSONArray c = (JSONArray) ((JSONArray) ((JSONArray) geometry.get("coordinates")).get(0)).get(0);
+            List<Point> borders = new ArrayList<>();
             for (Object coords : c) {
-                System.out.println(coords);
+                double x = (double)((List)coords).get(0);
+                double y = (double)((List)coords).get(1);
+                borders.add(new Point(x, y));
             }
+            polygons.put(polygonName, new Polygon(borders));
         }
+
+        return polygons;
     }
 
     public static void main(String[] args) throws IOException {
-        //readPolygons("london.geojson");
+        Map<String, Polygon> polygons = readPolygons("london.geojson");
+        for (Map.Entry<String, Polygon> entry : polygons.entrySet()) {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue().mbr());
+        }
         /*RTree<String, Rectangle> tree = RTree.create();
         tree = tree.add("first", Geometries.rectangle(0,0,4,4));
         tree = tree.add("second", Geometries.rectangle(2,2,6,6));
@@ -35,7 +47,7 @@ public class AdvancedTrees {
 
         Observable<Entry<String, Rectangle>> results = tree.search(Geometries.point(5, 5));
         results.map(Entry::value).subscribe(System.out::println);*/
-        List<Point> p1 = Arrays.asList(new Point(0, 3), new Point(1, 4), new Point(2, 6), new Point(3, 4),
+        /*List<Point> p1 = Arrays.asList(new Point(0, 3), new Point(1, 4), new Point(2, 6), new Point(3, 4),
                                            new Point(2, 2), new Point(1, 1));
         List<Point> p2 = Arrays.asList(new Point(2, 6), new Point(5, 6), new Point(3, 4));
         List<Point> p3 = Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 3), new Point(5, 1));
@@ -44,11 +56,8 @@ public class AdvancedTrees {
         Polygon poly2 = new Polygon(p2);
         Polygon poly3 = new Polygon(p3);
         Polygon poly4 = new Polygon(p4);
-        Point pp = new Point(1.2,1.1);
-        System.out.println(poly1.contains(pp));
-        System.out.println(poly2.contains(pp));
-        System.out.println(poly3.contains(pp));
-        System.out.println(poly4.contains(pp));
+        Point pp = new Point(1.2,1.1);*/
+
     }
 }
 
