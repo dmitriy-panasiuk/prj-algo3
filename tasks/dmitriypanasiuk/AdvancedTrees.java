@@ -2,11 +2,11 @@ package dmitriypanasiuk;
 
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
-import org.w3c.dom.css.Rect;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class AdvancedTrees {
     }
 
     public static void main(String[] args) throws IOException {
-        readPolygons("london.geojson");
+        //readPolygons("london.geojson");
         /*RTree<String, Rectangle> tree = RTree.create();
         tree = tree.add("first", Geometries.rectangle(0,0,4,4));
         tree = tree.add("second", Geometries.rectangle(2,2,6,6));
@@ -35,6 +35,20 @@ public class AdvancedTrees {
 
         Observable<Entry<String, Rectangle>> results = tree.search(Geometries.point(5, 5));
         results.map(Entry::value).subscribe(System.out::println);*/
+        List<Point> p1 = Arrays.asList(new Point(0, 3), new Point(1, 4), new Point(2, 6), new Point(3, 4),
+                                           new Point(2, 2), new Point(1, 1));
+        List<Point> p2 = Arrays.asList(new Point(2, 6), new Point(5, 6), new Point(3, 4));
+        List<Point> p3 = Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 3), new Point(5, 1));
+        List<Point> p4 = Arrays.asList(new Point(1, 1), new Point(2, 2), new Point(3, 4), new Point(5, 1), new Point(3, 0));
+        Polygon poly1 = new Polygon(p1);
+        Polygon poly2 = new Polygon(p2);
+        Polygon poly3 = new Polygon(p3);
+        Polygon poly4 = new Polygon(p4);
+        Point pp = new Point(1.2,1.1);
+        System.out.println(poly1.contains(pp));
+        System.out.println(poly2.contains(pp));
+        System.out.println(poly3.contains(pp));
+        System.out.println(poly4.contains(pp));
     }
 }
 
@@ -61,18 +75,23 @@ class Polygon {
             if (areIntersecting(p.x, p.y, mbr().x1, mbr().y1,
                                 borders.get(side).x, borders.get(side).y,
                                 borders.get(side+1).x, borders.get(side+1).y)) {
+                /*System.out.print("(" + p.x + "," + p.y + ") - (" + mbr().x1 + "," + mbr().y1 + ")");
+                System.out.println(" intersects with (" + borders.get(side).x + "," + borders.get(side).y + ") - (" + borders.get(side+1).x + "," + borders.get(side+1).y + ")");*/
                 intersections++;
             }
         }
         if (areIntersecting(p.x, p.y, mbr().x1, mbr().y1,
-                borders.get(0).x, borders.get(0).y,
-                borders.get(borders.size()-1).x, borders.get(borders.size()-1).y)) {
+                borders.get(borders.size()-1).x, borders.get(borders.size()-1).y,
+                borders.get(0).x, borders.get(0).y)) {
+            /*System.out.print("(" + p.x + "," + p.y + ") - (" + mbr().x1 + "," + mbr().y1 + ")");
+            System.out.println(" intersects with (" + borders.get(borders.size()-1).x + "," + borders.get(borders.size()-1).y + ") - (" + borders.get(0).x + "," + borders.get(0).y + ")");*/
             intersections++;
         }
+        //System.out.println("intersections " + intersections);
         return (intersections & 1) == 1;
     }
 
-    private boolean areIntersecting(double v1x1, double v1y1, double v1x2, double v1y2,
+    public boolean areIntersecting(double v1x1, double v1y1, double v1x2, double v1y2,
                                     double v2x1, double v2y1, double v2x2, double v2y2) {
         double d1, d2;
         double a1, a2, b1, b2, c1, c2;
@@ -108,7 +127,7 @@ class Polygon {
                 if (p.y < ymin) ymin = p.y;
                 if (p.y > ymax) ymax = p.y;
             }
-            this.mbr = new Rectangle(xmin, xmax, ymin, ymax);
+            this.mbr = new Rectangle(xmin, ymin, xmax, ymax);
         }
         return this.mbr;
     }
@@ -117,12 +136,21 @@ class Polygon {
 class Rectangle {
     double x1, x2, y1, y2;
 
-    Rectangle(double x1, double x2, double y1, double y2) {
-        assert x1 < x2;
-        assert y1 < y2;
+    @Override
+    public String toString() {
+        return "Rectangle{" +
+                "x1=" + x1 +
+                ", y1=" + y1 +
+                ", x2=" + x2 +
+                ", y2=" + y2 +
+                '}';
+    }
+
+    Rectangle(double x1, double y1, double x2, double y2) {
+        if (!(x1 < x2 && y1 < y2)) throw new RuntimeException("Invalid rectangle");
         this.x1 = x1;
-        this.x2 = x2;
         this.y1 = y1;
+        this.x2 = x2;
         this.y2 = y2;
     }
 
