@@ -1,7 +1,11 @@
 package dmitriypanasiuk;
 
+import com.github.davidmoten.rtree.Entry;
+import com.github.davidmoten.rtree.RTree;
+import com.github.davidmoten.rtree.geometry.Geometries;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
+import rx.Observable;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,8 +58,18 @@ public class AdvancedTrees {
         System.out.println("Outside of London");
     }
 
+    public static void rtree(Map<String, Polygon> polygons, Point p) {
+        RTree<String, com.github.davidmoten.rtree.geometry.Rectangle> tree = RTree.create();
+        for (Map.Entry<String, Polygon> entry : polygons.entrySet()) {
+            Rectangle mbr = entry.getValue().mbr();
+            tree = tree.add(entry.getKey(), Geometries.rectangle(mbr.x1, mbr.y1, mbr.x2, mbr.y2));
+        }
+        Observable<Entry<String, com.github.davidmoten.rtree.geometry.Rectangle>> result = tree.search(Geometries.point(p.x, p.y));
+        //result.map(Entry::value).subscribe(System.out::println);
+    }
+
     public static void main(String[] args) throws IOException {
-        int N = 10000;
+        int N = 100000;
         Point londonCityCenter = new Point(-0.118092, 51.509865);
         Point bigBen = new Point(-0.1246, 51.5007);
         Point tower = new Point(-0.076111, 51.508056);
@@ -72,7 +86,11 @@ public class AdvancedTrees {
         for (int i = 0; i < N; i++) {
             optimizedBruteForce(polygons, FairfieldHalls);
         }
-
+        System.out.println(clock.elapsedTime());
+        clock = new StopWatch();
+        for (int i = 0; i < N; i++) {
+            rtree(polygons, FairfieldHalls);
+        }
         System.out.println(clock.elapsedTime());
 
         /*RTree<String, Rectangle> tree = RTree.create();
