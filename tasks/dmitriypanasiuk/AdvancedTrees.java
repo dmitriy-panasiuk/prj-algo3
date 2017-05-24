@@ -34,12 +34,47 @@ public class AdvancedTrees {
         return polygons;
     }
 
-    public static void main(String[] args) throws IOException {
-        Map<String, Polygon> polygons = readPolygons("london.geojson");
+    public static void bruteForce(Map<String, Polygon> polygons, Point p) {
         for (Map.Entry<String, Polygon> entry : polygons.entrySet()) {
-            System.out.println(entry.getKey());
-            System.out.println(entry.getValue().mbr());
+            if (entry.getValue().contains(p)) {
+                //System.out.println(entry.getKey());
+                return;
+            }
         }
+        System.out.println("Outside of London");
+    }
+
+    public static void optimizedBruteForce(Map<String, Polygon> polygons, Point p) {
+        for (Map.Entry<String, Polygon> entry : polygons.entrySet()) {
+            if (entry.getValue().mbr().contains(p) && entry.getValue().contains(p)) {
+                //System.out.println(entry.getKey());
+                return;
+            }
+        }
+        System.out.println("Outside of London");
+    }
+
+    public static void main(String[] args) throws IOException {
+        int N = 10000;
+        Point londonCityCenter = new Point(-0.118092, 51.509865);
+        Point bigBen = new Point(-0.1246, 51.5007);
+        Point tower = new Point(-0.076111, 51.508056);
+        Point zoo = new Point(-0.155833, 51.535556);
+        Point stPaulCathedral = new Point(-0.098056, 51.513611);
+        Point FairfieldHalls = new Point(-0.095833, 51.372222);
+        Map<String, Polygon> polygons = readPolygons("london.geojson");
+        StopWatch clock = new StopWatch();
+        for (int i = 0; i < N; i++) {
+            bruteForce(polygons, FairfieldHalls);
+        }
+        System.out.println(clock.elapsedTime());
+        clock = new StopWatch();
+        for (int i = 0; i < N; i++) {
+            optimizedBruteForce(polygons, FairfieldHalls);
+        }
+
+        System.out.println(clock.elapsedTime());
+
         /*RTree<String, Rectangle> tree = RTree.create();
         tree = tree.add("first", Geometries.rectangle(0,0,4,4));
         tree = tree.add("second", Geometries.rectangle(2,2,6,6));
