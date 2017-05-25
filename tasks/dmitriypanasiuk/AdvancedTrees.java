@@ -68,6 +68,16 @@ public class AdvancedTrees {
         //result.map(Entry::value).subscribe(System.out::println);
     }
 
+    public static void rtreeStar(Map<String, Polygon> polygons, Point p) {
+        RTree<String, com.github.davidmoten.rtree.geometry.Rectangle> tree = RTree.star().create();
+        for (Map.Entry<String, Polygon> entry : polygons.entrySet()) {
+            Rectangle mbr = entry.getValue().mbr();
+            tree = tree.add(entry.getKey(), Geometries.rectangle(mbr.x1, mbr.y1, mbr.x2, mbr.y2));
+        }
+        Observable<Entry<String, com.github.davidmoten.rtree.geometry.Rectangle>> result = tree.search(Geometries.point(p.x, p.y));
+        //result.map(Entry::value).subscribe(System.out::println);
+    }
+
     public static void main(String[] args) throws IOException {
         int N = 100000;
         Point londonCityCenter = new Point(-0.118092, 51.509865);
@@ -90,6 +100,11 @@ public class AdvancedTrees {
         clock = new StopWatch();
         for (int i = 0; i < N; i++) {
             rtree(polygons, FairfieldHalls);
+        }
+        System.out.println(clock.elapsedTime());
+        clock = new StopWatch();
+        for (int i = 0; i < N; i++) {
+            rtreeStar(polygons, FairfieldHalls);
         }
         System.out.println(clock.elapsedTime());
 
