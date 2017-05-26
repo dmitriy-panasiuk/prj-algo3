@@ -79,7 +79,7 @@ public class AdvancedTrees {
     }
 
     public static void main(String[] args) throws IOException {
-        int N = 100000;
+        /*int N = 1;
         Point londonCityCenter = new Point(-0.118092, 51.509865);
         Point bigBen = new Point(-0.1246, 51.5007);
         Point tower = new Point(-0.076111, 51.508056);
@@ -106,14 +106,16 @@ public class AdvancedTrees {
         for (int i = 0; i < N; i++) {
             rtreeStar(polygons, FairfieldHalls);
         }
-        System.out.println(clock.elapsedTime());
+        System.out.println(clock.elapsedTime());*/
 
-        /*RTree<String, Rectangle> tree = RTree.create();
-        tree = tree.add("first", Geometries.rectangle(0,0,4,4));
-        tree = tree.add("second", Geometries.rectangle(2,2,6,6));
-        tree = tree.add("third", Geometries.rectangle(0,2,4,4));
+        dmitriypanasiuk.RTree tree = new dmitriypanasiuk.RTree();
+        tree.insert("first", new Rectangle(0,0,1,1));
+        tree.insert("second", new Rectangle(1,0,2,1));
+        tree.insert("third", new Rectangle(0,1,1,2));
+        tree.insert("fourth", new Rectangle(1,1,2,2));
+        tree.insert("splitter", new Rectangle(2,0,3,1));
 
-        Observable<Entry<String, Rectangle>> results = tree.search(Geometries.point(5, 5));
+        /*Observable<Entry<String, Rectangle>> results = tree.search(Geometries.point(5, 5));
         results.map(Entry::value).subscribe(System.out::println);*/
         /*List<Point> p1 = Arrays.asList(new Point(0, 3), new Point(1, 4), new Point(2, 6), new Point(3, 4),
                                            new Point(2, 2), new Point(1, 1));
@@ -231,8 +233,15 @@ class Rectangle {
         this.y2 = y2;
     }
 
+    public Rectangle add(Rectangle r) {
+        return new Rectangle(Math.min(this.x1, r.x1), Math.min(this.y1, r.y1), Math.max(this.x2, r.x2), Math.max(this.y2, r.y2));
+    }
+
+    public double area() {
+        return (this.x2 - this.x1) * (this.y2 - this.y1);
+    }
+
     public boolean contains(Point p) {
-        if (x1 <= p.x && x2 >= p.x && y1 <= p.y && y2 >= p.y) return true;
-        return false;
+        return x1 <= p.x && x2 >= p.x && y1 <= p.y && y2 >= p.y;
     }
 }
