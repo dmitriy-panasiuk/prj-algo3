@@ -1,7 +1,5 @@
 package dmitriypanasiuk.util;
 
-import dmitriypanasiuk.MinHeap;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 

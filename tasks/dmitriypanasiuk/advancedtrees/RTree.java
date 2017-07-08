@@ -1,4 +1,4 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.advancedtrees;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 

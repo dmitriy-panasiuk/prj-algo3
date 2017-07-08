@@ -1,4 +1,4 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.advancedhashing;
 
 import dmitriypanasiuk.util.FNV1a;
 import dmitriypanasiuk.util.RandomString;

@@ -1,4 +1,4 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.seamcarving;
 
 import dmitriypanasiuk.util.Picture;
 import dmitriypanasiuk.util.StopWatch;

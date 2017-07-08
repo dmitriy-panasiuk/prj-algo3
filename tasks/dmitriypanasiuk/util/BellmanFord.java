@@ -1,4 +1,4 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.util;
 
 import dmitriypanasiuk.util.DirectedEdge;
 import dmitriypanasiuk.util.EdgeWeightedDigraph;

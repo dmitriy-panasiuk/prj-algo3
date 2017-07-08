@@ -1,4 +1,4 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.advancedtrees;
 
 import com.github.davidmoten.rtree.Entry;
 import com.github.davidmoten.rtree.RTree;
@@ -108,7 +108,7 @@ public class AdvancedTrees {
         }
         System.out.println(clock.elapsedTime());*/
 
-        dmitriypanasiuk.RTree tree = new dmitriypanasiuk.RTree();
+        dmitriypanasiuk.advancedtrees.RTree tree = new dmitriypanasiuk.advancedtrees.RTree();
         tree.insert("first", new Rectangle(0,0,1,1));
         tree.insert("second", new Rectangle(1,0,2,1));
         tree.insert("third", new Rectangle(0,1,1,2));

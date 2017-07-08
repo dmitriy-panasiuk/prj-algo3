@@ -1,5 +1,7 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.shortestpaths;
 
+import dmitriypanasiuk.util.BellmanFord;
+import dmitriypanasiuk.util.FloydWarshall;
 import dmitriypanasiuk.dynamicprogramming.DynamicTask1;
 import dmitriypanasiuk.util.*;
 

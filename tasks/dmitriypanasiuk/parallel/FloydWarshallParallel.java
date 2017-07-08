@@ -1,4 +1,4 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.parallel;
 
 import dmitriypanasiuk.util.DirectedEdge;
 

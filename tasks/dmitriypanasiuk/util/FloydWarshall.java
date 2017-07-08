@@ -1,7 +1,6 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.util;
 
-import dmitriypanasiuk.util.AdjMatrixEdgeWeightedDigraph;
-import dmitriypanasiuk.util.DirectedEdge;
+import dmitriypanasiuk.parallel.FloydWarshallParallel;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
