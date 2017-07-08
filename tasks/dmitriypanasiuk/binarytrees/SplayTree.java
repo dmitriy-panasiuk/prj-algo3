@@ -1,4 +1,4 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.binarytrees;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
