@@ -1,4 +1,4 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.util;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,5 +1,8 @@
 package dmitriypanasiuk;
 
+import dmitriypanasiuk.util.AdjMatrixEdgeWeightedDigraph;
+import dmitriypanasiuk.util.DirectedEdge;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.ForkJoinPool;

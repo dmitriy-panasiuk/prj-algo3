@@ -1,5 +1,8 @@
 package dmitriypanasiuk;
 
+import dmitriypanasiuk.dynamicprogramming.DynamicTask1;
+import dmitriypanasiuk.util.*;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;

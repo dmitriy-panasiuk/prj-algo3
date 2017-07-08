@@ -1,5 +1,7 @@
 package dmitriypanasiuk;
 
+import dmitriypanasiuk.util.DirectedEdge;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.RecursiveAction;

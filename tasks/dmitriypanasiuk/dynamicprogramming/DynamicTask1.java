@@ -1,4 +1,7 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.dynamicprogramming;
+
+import dmitriypanasiuk.util.DirectedEdge;
+import dmitriypanasiuk.util.EdgeWeightedDigraph;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,4 +1,4 @@
-package dmitriypanasiuk;
+package dmitriypanasiuk.util;
 
 public class DirectedEdge {
     private int from;

@@ -1,6 +1,7 @@
 package dmitriypanasiuk;
 
-import dmitriypanasiuk.StopWatch;
+import dmitriypanasiuk.util.Picture;
+import dmitriypanasiuk.util.StopWatch;
 
 import java.awt.*;
 

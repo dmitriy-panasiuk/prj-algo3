@@ -1,5 +1,8 @@
 package dmitriypanasiuk;
 
+import dmitriypanasiuk.util.DirectedEdge;
+import dmitriypanasiuk.util.EdgeWeightedDigraph;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
