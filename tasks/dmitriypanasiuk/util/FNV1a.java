@@ -7,11 +7,11 @@ public class FNV1a {
     private static final long FNV1_PRIME_64 = 1099511628211L;
 
     public static int hash32(byte[] data) {
-        return hash32(data, data.length);
+        return hash32(data, data.length, FNV1_32_INIT);
     }
 
-    public static int hash32(byte[] data, int length) {
-        int hash = FNV1_32_INIT;
+    public static int hash32(byte[] data, int length, int d) {
+        int hash = d;
         for (int i = 0; i < length; i++) {
             hash ^= (data[i] & 0xff);
             hash *= FNV1_PRIME_32;
